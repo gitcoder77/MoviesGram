@@ -1,0 +1,45 @@
+<!-- dashboard.html -->
+{% extends 'base.html' %}
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+    <h1>Dashboard</h1>
+    <div class="row">
+        <!-- Profile Section -->
+        <div class="col-md-6">
+            <h2>Edit Profile</h2>
+            <p>{{users}}</p>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+<hr>
+        <!-- Movies Section -->
+       <div class="col-md-6">
+    <h2>Your Movies</h2>
+    {% if user_movies %}
+        <div class="row">
+            {% for movie in user_movies %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ movie.img.url }}" class="card-img-top" alt="Movie Poster">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ movie.name }}</h5>
+                            <p class="card-text">{{ movie.desc }}</p>
+                            <a href="{% url 'moviesgram:update_movie' movie.id %}" class="btn btn-primary">Edit</a>
+                            <a href="{% url 'moviesgram:delete_movie' movie.id %}" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No movies added yet.</p>
+    {% endif %}
+    </div>
+    </div>
+{% endblock %}

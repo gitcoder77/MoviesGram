@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Movies Category{% endblock %}
+
+{% block content %}
+<h1> Add Category</h1>
+<br>
+<br>
+<div class="form-group">
+  <form method="POST">
+    {% csrf_token %}
+    <h4> Category name</h4>
+    <input type="text" name="name" placeholder="Enter category name"></br>
+    <input type="text" name="slug" placeholder="Enter category slug"></br>
+    <button class="btn btn-secondary" type="submit">Add Category</button>
+  </form>
+
+</div>
+{% endblock %}

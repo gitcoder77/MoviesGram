@@ -1,0 +1,23 @@
+<!-- movies.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Movies
+{% endblock %}
+
+{% block content %}
+<h1>Add New Movie.</h1>
+<hr>
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>Post</button>
+</form>
+<hr>
+
+    <button class="btn btn-primary" href="{% url 'moviesgram:AddCategory' %}">Add Category</button>
+
+
+    <button class="btn btn-primary" href="{% url 'moviesgram:AddLanguage' %}">Add Language</button>
+
+{% endblock %}

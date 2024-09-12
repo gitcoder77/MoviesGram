@@ -1,0 +1,109 @@
+<!-- movie_detail.html -->
+{% extends 'base.html' %}
+
+{% block title %}Movie Details{% endblock %}
+
+{% block content %}
+<div class="row" xmlns="http://www.w3.org/1999/html">
+        <div class="col-md-8">
+            <h1>{{ movie.name }}</h1>
+            <p>Listed by - {{ movie.added_by }}</p>
+        </div>
+        <div>
+            <!-- Movie poster -->
+            <img src="{{ movie.img.url }}" class="img-fluid" alt="Movie Poster" width="1000px" height="2000px">
+        </div>
+</div>
+<hr>
+
+        <!-- Embedded YouTube video -->
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe width="560" height="315" src="{{ movie.youtube }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+    <!-- Additional movie details -->
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <h3>Details</h3>
+            <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+            <p><strong>Language:</strong> {{ movie.language }}</p>
+            <p><strong>Category:</strong> {{ movie.category }}</p>
+            <p><strong>Description:</strong> {{ movie.desc }}</p>
+            <!-- Add more details as needed -->
+        </div>
+    </div>
+<h3>All rating and reviews</h3>
+{% for x in reviews%}
+<p>{{ x.user }}</p>
+<p>{{ x.review_desp }}</p>
+
+ {% if x.rating > 0 %}
+                  <i class="fa fa-star {% if x.rating  < 1 %} no-checked {% else %} checked {% endif %} " id="check-star"></i>
+                  <i class="fa fa-star {% if x.rating  < 2 %} no-checked {% else %} checked {% endif %} " id="check-star"></i>
+                  <i class="fa fa-star {% if x.rating  < 3 %} no-checked {% else %} checked {% endif %} " id="check-star"></i>
+                  <i class="fa fa-star {% if x.rating  < 4 %} no-checked {% else %} checked {% endif %} " id="check-star"></i>
+                  <i class="fa fa-star {% if x.rating  < 5 %} no-checked {% else %} checked {% endif %} " id="check-star"></i>
+                <hr>
+                {% else %}
+
+                 <i class="fa fa-star " id="star"></i>
+                 <i class="fa fa-star" id="star"></i>
+                 <i class="fa fa-star" id="star"></i>
+                 <i class="fa fa-star" id="star"></i>
+                 <i class="fa fa-star" id="star"></i>
+                        &nbsp;<span>No ratings</span>
+
+                <hr>
+
+                {% endif %}
+{% endfor %}
+<form method="post" action="">
+    {% csrf_token %}
+
+  <div class="col-md-6">
+                <p style="font-weight:600;">Write a review</p>
+                <form method="Post">
+                    {% csrf_token %}
+
+                           <div class="form-group required">
+                      <div class="rating">
+
+                          <input type="radio" id="star5" name="rating" value="5" />
+                          <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                          <input type="radio" id="star4" name="rating" value="4" />
+                          <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                          <input type="radio" id="star3" name="rating" value="3" />
+                          <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                          <input type="radio" id="star2" name="rating" value="2" />
+                          <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                          <input type="radio" id="star1" name="rating" value="1" />
+                          <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
+
+                        </div>
+                    </div>
+
+  </div>
+                    <textarea name="item_review"  placeholder="write a review" rows="6" cols="50" id="review-text" required></textarea>
+                    <br>
+
+                <div class="row">
+
+                    <div class="col-md-4">
+
+                          <input type="submit"  class="btn btn-primary mt-2" value="Post">
+<!--                    col finish-->
+
+                    </div>
+                </div>
+</form>
+<hr>
+<ln>
+    <div class="container">
+        {% if user.is_authenticated %}
+         {% if user.id == movie.added_by.id %}
+              <button class="btn btn-primary" href="{% url 'moviesgram:update_movie' movie.pk %}">Edit {{ movie.name }}</button>
+              <button class="btn btn-danger" href="{% url 'moviesgram:delete_movie' movie.pk %}">Delete {{ movie.name }}</button>
+           {% endif %}
+        {% endif %}
+        {% endblock %}
+    </div>
+</ln>

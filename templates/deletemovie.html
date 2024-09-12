@@ -1,0 +1,19 @@
+<!-- movies.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Movies
+{% endblock %}
+
+{% block content %}
+<h1>Delete Movie..</h1>
+<br/>
+<br/>
+<h3> Delete: {{ movie.name }} </h3>
+<form method="POST">
+    {% csrf_token %}
+  <strong>Are you sure you want to delete this movie?</strong><br/>
+    <button class="btn btn-danger" >Yes</button>
+</form><br/>
+<a class="btn btn-primary" href="{% url 'users:dashboard' %}" >No</a>
+{% endblock %}

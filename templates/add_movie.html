@@ -1,0 +1,50 @@
+<!-- movies.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Movies
+{% endblock %}
+
+{% block content %}
+<h1>Add New Movie by  {{user_name}}</h1>
+<div>
+    <hr>
+    <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+        <div>
+            <h4> Movie name</h4>
+            <input type="text" name="name" placeholder="Enter movie name"></br>
+            <h4> Actor name</h4>
+            <input type="text" name="actor" placeholder="Enter actor name"></br>
+            <h4> Movie Trailer </h4>
+            <input type="url" name="youtube" placeholder="Youtube link"></br>
+            <h4> Movie description </h4>
+            <textarea type="text" name="desc" placeholder="Enter movie description"></textarea></br>
+            <h4> Movie release date </h4>
+            <input type="date" name="release_date" ></br>
+            <h4> Upload movie poster </h4>
+            <input type="file" name="img" ></br>
+            <h4> Movie category </h4>
+            <select name="category" id="category">
+                {% for c in category %}
+                    <option value={{c.id}}> {{c}} </option>
+                    
+                {% endfor %}</select>
+            <h4> Movie Language </h4>
+             <select name="language" id="language">
+                {% for l in language %}
+                    <option value={{l.id}}>{{l}}</option>
+                 {% endfor %}</select>
+        </div></br>
+        <h4> Added By</h4>
+        <input type="text" name="added_by" value={{user_name}} readonly placeholder="Enter movie release date"></br>
+        <input class="btn btn-primary" type="submit" value="Add Movie">
+    </form>
+    <hr>
+</div>
+    <a class="btn btn-primary" href="{% url 'moviesgram:AddCategory' %}">Add New Category</a>
+
+
+    <a class="btn btn-primary" href="{% url 'moviesgram:AddLanguage' %}">Add New Language</a>
+
+{% endblock %}

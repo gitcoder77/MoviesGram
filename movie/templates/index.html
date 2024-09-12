@@ -1,0 +1,31 @@
+<!-- movies.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Movies
+{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Movies</h1>
+    <div class="container">
+        <div class="row">
+            {% for i in movie_list %}
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="{{ i.img.url }}" class="card-img-top" alt="Movie Poster" width="150px"height="300px">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ i.name }}</h5>
+                            <a href="{% url 'moviesgram:MovieDetail' i.id %}" class="btn btn-primary">Detail</a>
+                        </div>
+                    </div>
+                </div>
+                {% if forloop.counter|divisibleby:4 and not forloop.last %}
+                    </div>
+        <div class="row">
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

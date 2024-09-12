@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MovieGram - Social Media for Movie Lovers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #004AAD;
+            overflow: hidden;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+        .dropdown {
+            float: left;
+            overflow: hidden;
+        }
+        .dropdown .dropbtn {
+            font-size: 16px;
+            border: none;
+            outline: none;
+            color: white;
+            padding: 14px 20px;
+            background-color: inherit;
+            font-family: inherit;
+            margin: 0;
+        }
+        .navbar a:hover, .dropdown:hover .dropbtn {
+            background-color: #ddd;
+            color: black;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            float: none;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .logout {
+            float: right;
+        }
+        .search {
+            float: right;
+            padding: 14px 20px;
+        }
+        .logo img {
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="{% url 'moviesgram:index' %}" class="logo"><img src="{% static 'img/logo.png' %}" alt="MovieGram Logo"></a>
+    {% if cat_menu %}
+        <div class="dropdown">
+            <button class="dropbtn">Categories</button>
+            <div class="dropdown-content">
+                {% for item in cat_menu %}
+                    <a href="{% url 'moviesgram:category' item|slugify %}">{{ item }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    {% if langs_menu %}
+        <div class="dropdown">
+            <button class="dropbtn">Languages</button>
+            <div class="dropdown-content">
+                {% for item in langs_menu %}
+                    <a href="{% url 'moviesgram:language' item|slugify %}">{{ item }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    <a href="{% url 'moviesgram:AddMovie' %}">Add Movie</a>
+    <a href="{% url 'users:dashboard' %}">Dashboard</a>
+
+    <form class="search" action="{% url 'search:SearchResult' %}" method="get">
+        {% csrf_token %}
+        <input type="search" placeholder="Search" name="q" aria-label="Search">
+        <button type="submit">Search</button>
+    </form>
+
+    <form class="logout" action="{% url 'users:logout' %}" method="post">
+        {% csrf_token %}
+         <button type="submit" class="btn btn-danger">Logout</button>
+    </form>
+</div>
+</body>
+</html>

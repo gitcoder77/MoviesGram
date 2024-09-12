@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Movies Language{% endblock %}
+
+{% block content %}
+<h1> Add Language</h1>
+<br>
+<br>
+<div class="form-group">
+  <form method="POST">
+    {% csrf_token %}
+    <h4> Language name</h4>
+    <input type="text" name="name" placeholder="Enter language name"></br>
+    <input type="text" name="slug" placeholder="Enter language slug"></br>
+    <button class="btn btn-secondary" type="submit">Add Language</button>
+  </form>
+
+</div>
+{% endblock %}

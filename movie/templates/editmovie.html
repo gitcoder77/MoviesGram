@@ -1,0 +1,19 @@
+<!-- movies.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Movies
+{% endblock %}
+
+{% block content %}
+<h1>Add New Movie..</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>Post</button>
+</form>
+<li class="nav-item">
+    <a href="{% url 'moviesgram:AddCategory' %}">Add Category</a>
+</li>
+{% endblock %}

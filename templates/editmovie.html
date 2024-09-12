@@ -1,0 +1,17 @@
+<!-- movies.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Movies
+{% endblock %}
+
+{% block content %}
+<h1>Edit Movie..</h1>
+<p>{{name}} </p>
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button class="btn-btn-primary">Post</button>
+</form>
+<p>{{name}}{{actor}}</p>
+{% endblock %}
